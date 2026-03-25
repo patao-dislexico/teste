@@ -1,3 +1,6 @@
+if (typeof io === 'undefined') {
+  alert('Não foi possível carregar o cliente em tempo real. Inicia o servidor com "npm start" e abre pelo link http://localhost:3000');
+}
 const socket = io();
 let currentQuestion = null;
 let timerInterval = null;
@@ -15,17 +18,35 @@ const questionTitle = document.getElementById('question-title');
 const timerBar = document.getElementById('timer-bar');
 const feedback = document.getElementById('answer-feedback');
 const podium = document.getElementById('podium');
+const statusMsg = document.getElementById('status-msg');
 
-function show(el) { el.classList.remove('hidden'); }
-function hide(el) { el.classList.add('hidden'); }
+function show(el) {
+  el.classList.remove('hidden');
+  el.hidden = false;
+}
+function hide(el) {
+  el.classList.add('hidden');
+  el.hidden = true;
+}
 
 joinBtn.addEventListener('click', () => {
+  if (!socket.connected) {
+    statusMsg.textContent = 'Sem ligação ao servidor. Confirma se correste "npm start".';
+    return;
+  }
   socket.emit('player:join', { username: usernameInput.value });
+});
+
+usernameInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    joinBtn.click();
+  }
 });
 
 socket.on('join:error', (msg) => alert(msg));
 
 socket.on('join:success', ({ teams }) => {
+  statusMsg.textContent = '';
   hide(joinView);
   show(teamView);
   renderTeams(teams);
@@ -97,4 +118,12 @@ socket.on('game:ended', ({ podium: top }) => {
     li.textContent = `#${idx + 1} ${team.name} - média ${team.avg.toFixed(1)} (total ${team.total}, ${team.players} jogadores)`;
     podium.appendChild(li);
   });
+});
+
+socket.on('connect', () => {
+  statusMsg.textContent = 'Ligado ao servidor ✅';
+});
+
+socket.on('disconnect', () => {
+  statusMsg.textContent = 'Ligação perdida. A tentar reconectar...';
 });

@@ -17,22 +17,23 @@
         <button id="join-btn">Entrar</button>
       </section>
 
-      <section id="team-view" class="card hidden">
+      <section id="team-view" class="card hidden" hidden>
         <h2>Escolhe uma equipa</h2>
         <div id="teams" class="team-grid"></div>
       </section>
 
-      <section id="question-view" class="card hidden">
+      <section id="question-view" class="card hidden" hidden>
         <div class="timer-wrap"><div id="timer-bar"></div></div>
         <h2 id="question-title"></h2>
         <div id="answers" class="answer-grid"></div>
         <p id="answer-feedback"></p>
       </section>
 
-      <section id="final-view" class="card hidden">
+      <section id="final-view" class="card hidden" hidden>
         <h2>Fim do jogo 🏁</h2>
         <ol id="podium"></ol>
       </section>
+      <p id="status-msg"></p>
     </main>
 
     <script src="/socket.io/socket.io.js"></script>

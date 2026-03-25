@@ -9,6 +9,7 @@ const hostQTitle = document.getElementById('host-q-title');
 const hostCountdown = document.getElementById('host-countdown');
 const hostFinal = document.getElementById('host-final');
 const hostPodium = document.getElementById('host-podium');
+const hostStatus = document.getElementById('host-status');
 
 socket.emit('host:register');
 
@@ -35,7 +36,9 @@ socket.on('host:updateTeams', ({ teams }) => renderTeams(teams));
 
 socket.on('question:start', (q) => {
   hostQuestion.classList.remove('hidden');
+  hostQuestion.hidden = false;
   hostFinal.classList.add('hidden');
+  hostFinal.hidden = true;
   hostQTitle.textContent = `Pergunta ${q.index + 1}/${q.total}: ${q.text}`;
 
   const timer = setInterval(() => {
@@ -47,10 +50,19 @@ socket.on('question:start', (q) => {
 
 socket.on('game:ended', ({ podium }) => {
   hostFinal.classList.remove('hidden');
+  hostFinal.hidden = false;
   hostPodium.innerHTML = '';
   podium.forEach((team, idx) => {
     const li = document.createElement('li');
     li.textContent = `#${idx + 1} ${team.name} — média ${team.avg.toFixed(1)} (total ${team.total})`;
     hostPodium.appendChild(li);
   });
+});
+
+socket.on('connect', () => {
+  hostStatus.textContent = 'Host ligado ✅';
+});
+
+socket.on('disconnect', () => {
+  hostStatus.textContent = 'Host sem ligação. A tentar reconectar...';
 });
