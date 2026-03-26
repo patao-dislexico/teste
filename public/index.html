@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Equipas</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Entrar no Quiz</h1>
+      <p>Faz scan do QR code e entra com o teu nome.</p>
+
+      <section id="join-view" class="card">
+        <label for="username">Utilizador</label>
+        <input id="username" placeholder="Escreve o teu nome" maxlength="20" />
+        <button id="join-btn">Entrar</button>
+      </section>
+
+      <section id="team-view" class="card hidden" hidden>
+        <h2>Escolhe uma equipa</h2>
+        <div id="teams" class="team-grid"></div>
+      </section>
+
+      <section id="question-view" class="card hidden" hidden>
+        <div class="timer-wrap"><div id="timer-bar"></div></div>
+        <h2 id="question-title"></h2>
+        <div id="answers" class="answer-grid"></div>
+        <p id="answer-feedback"></p>
+      </section>
+
+      <section id="final-view" class="card hidden" hidden>
+        <h2>Fim do jogo 🏁</h2>
+        <ol id="podium"></ol>
+      </section>
+      <p id="status-msg"></p>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/player.js"></script>
+  </body>
+</html>

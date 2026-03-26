@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host Quiz</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Painel do Host</h1>
+      <section class="card">
+        <h2>QR Code de entrada</h2>
+        <canvas id="qr"></canvas>
+        <p id="join-link"></p>
+      </section>
+
+      <section class="card">
+        <h2>Equipas e jogadores</h2>
+        <div id="teams" class="team-grid"></div>
+        <button id="start-btn">Iniciar</button>
+      </section>
+
+      <section id="host-question" class="card hidden" hidden>
+        <h2 id="host-q-title"></h2>
+        <p id="host-countdown"></p>
+      </section>
+
+      <section id="host-final" class="card hidden" hidden>
+        <h2>Pódio (pontuação média)</h2>
+        <ol id="host-podium"></ol>
+      </section>
+      <p id="host-status"></p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/host.js"></script>
+  </body>
+</html>
